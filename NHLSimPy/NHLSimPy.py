@@ -13,7 +13,7 @@ all_home_wins = []
 all_away_wins = []
 all_home_OTLs = []
 all_away_OTLs = []
-all_home_SOLs = []
+all_home_SOLs = [] #
 all_away_SOLs = []
 
 for x in range(0, 20000):
