@@ -85,11 +85,14 @@ class GameSimulator:
             home_sched_boost = -0.012
         else:
             home_sched_boost = 0.03
-
+        
         events = self.get_game_event_times(3.12)
 
         home_goals = 0
         away_goals = 0
+
+        home_running_goals = []
+        away_running_goals = []
         for event in events:
             home_gf = np.random.normal(home_gf_neut, self.GOAL_SD *2.25, 1) * (1 + home_sched_boost / 2.0 + self.HOME_ICE_AD / 2.0 ) 
             home_ga = np.random.normal(home_ga_neut, self.GOAL_SD *2.25, 1) / (1 + home_sched_boost / 2.0 + self.HOME_ICE_AD / 2.0 ) 
@@ -101,6 +104,11 @@ class GameSimulator:
                 home_goals = home_goals + 1
             elif home_gf < away_gf and home_ga > away_gf:
                 away_goals = away_goals +1
+
+            home_running_goals.append(home_goals)
+            away_running_goals.append(away_goals)
+
+        game_chart = pd.DataFrame({'iat':[0] + events + [60], 'homeG':[0] + home_running_goals + [home_goals], 'awayG':[0]+away_running_goals+[away_goals]})
 
         home_wins = 0
         away_wins = 0
@@ -117,11 +125,11 @@ class GameSimulator:
                     away_wins = 1
             else:
                 # game goes to OT
-                home_gf_ot = np.random.normal(home_gf_neut, self.GOAL_SD * 3.0, 1) * (1 + home_sched_boost + self.HOME_ICE_AD)
-                home_ga_ot = np.random.normal(home_ga_neut, self.GOAL_SD * 3.0, 1) / (1 + home_sched_boost + self.HOME_ICE_AD)
+                home_gf_ot = np.random.normal(home_gf_neut, self.GOAL_SD, 1) * (1 + home_sched_boost + self.HOME_ICE_AD)
+                home_ga_ot = np.random.normal(home_ga_neut, self.GOAL_SD, 1) / (1 + home_sched_boost + self.HOME_ICE_AD)
 
-                away_gf_ot = np.random.normal(away_gf_neut, self.GOAL_SD * 3.0, 1) / (1 + home_sched_boost + self.HOME_ICE_AD)
-                away_ga_ot = np.random.normal(away_ga_neut, self.GOAL_SD * 3.0, 1) * (1 + home_sched_boost + self.HOME_ICE_AD)
+                away_gf_ot = np.random.normal(away_gf_neut, self.GOAL_SD, 1) / (1 + home_sched_boost + self.HOME_ICE_AD)
+                away_ga_ot = np.random.normal(away_ga_neut, self.GOAL_SD, 1) * (1 + home_sched_boost + self.HOME_ICE_AD)
 
                 home_goals_ot = (home_gf_ot + away_ga_ot) / 2.0
                 away_goals_ot = (home_ga_ot + away_gf_ot) / 2.0
@@ -146,7 +154,7 @@ class GameSimulator:
                         home_SOLs = 1
                
          
-        return home_goals, away_goals, home_wins, away_wins, home_OTLs, away_OTLs, home_SOLs, away_SOLs
+        return home_goals, away_goals, home_wins, away_wins, home_OTLs, away_OTLs, home_SOLs, away_SOLs, game_chart
 
     def get_game_event_times(self, lam):
         events = np.random.poisson(lam, 20)

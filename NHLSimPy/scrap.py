@@ -1,19 +1,13 @@
+import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
-s = np.random.poisson(5, 10000)
 
+ts = pd.Series(np.random.randn(1000), index=pd.date_range('1/1/2000', periods=1000))
+ts = ts.cumsum()
 
-import matplotlib.pyplot as plt
-count, bins, ignored = plt.hist(s, 14, normed=True)
-#plt.show()
+df = pd.DataFrame(np.random.randn(1000, 4), index=ts.index, columns=list('ABCD'))
+df = df.cumsum()
 
+plt.figure(); df.plot();
 
-events = np.random.poisson(6, 10)
-df = pd.DataFrame({'iat':events})
-df['at'] = df['iat'].cumsum()
-
-#print list(df['at'])
-
-filtered  = [ num for num in list(df['at']) if num < 30 ]
-
-print filtered
+plt.show()
