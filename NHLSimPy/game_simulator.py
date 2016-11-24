@@ -117,13 +117,15 @@ class GameSimulator:
         home_SOLs = 0
         away_SOLs = 0
 
-        if not is_playoffs:
-            if home_goals != away_goals:
-                if home_goals > away_goals:
-                    home_wins = 1
-                else:
-                    away_wins = 1
+        if home_goals != away_goals:
+            if home_goals > away_goals:
+                home_goals = home_goals + 1
+                home_wins = 1
             else:
+                away_goals = away_goals + 1
+                away_wins = 1
+        else:
+            if not is_playoffs:
                 # game goes to OT
                 home_gf_ot = np.random.normal(home_gf_neut, self.GOAL_SD, 1) * (1 + home_sched_boost + self.HOME_ICE_AD)
                 home_ga_ot = np.random.normal(home_ga_neut, self.GOAL_SD, 1) / (1 + home_sched_boost + self.HOME_ICE_AD)
@@ -152,7 +154,23 @@ class GameSimulator:
                     else:
                         away_wins = 1
                         home_SOLs = 1
-               
+            else:
+                # playoffs have no ties or shootouts
+                home_gf_ot = np.random.normal(home_gf_neut, self.GOAL_SD, 1) * (1 + home_sched_boost + self.HOME_ICE_AD)
+                home_ga_ot = np.random.normal(home_ga_neut, self.GOAL_SD, 1) / (1 + home_sched_boost + self.HOME_ICE_AD)
+
+                away_gf_ot = np.random.normal(away_gf_neut, self.GOAL_SD, 1) / (1 + home_sched_boost + self.HOME_ICE_AD)
+                away_ga_ot = np.random.normal(away_ga_neut, self.GOAL_SD, 1) * (1 + home_sched_boost + self.HOME_ICE_AD)
+
+                home_goals_ot = (home_gf_ot + away_ga_ot) / 2.0
+                away_goals_ot = (home_ga_ot + away_gf_ot) / 2.0   
+            
+                if(home_goals_ot > away_goals_ot):
+                    home_goals = home_goals + 1
+                    home_wins = 1
+                else:
+                    away_goals = away_goals + 1
+                    away_wins = 1          
          
         return home_goals, away_goals, home_wins, away_wins, home_OTLs, away_OTLs, home_SOLs, away_SOLs, game_chart
 

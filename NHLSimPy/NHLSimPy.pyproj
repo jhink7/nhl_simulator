@@ -5,7 +5,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>c32dbe82-616e-485c-9488-626a5f20030b</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>NHLSimPy.py</StartupFile>
+    <StartupFile>playoff_runner.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -26,7 +26,22 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="NHLSimPy.py" />
+    <Compile Include="playoff_runner.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="playoff_simulator.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="scrap.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="series_simulator.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="team.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="temp.py">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
