@@ -1,5 +1,5 @@
 class SeriesSimulator(object):
-    """description of class"""
+    """An NHL Playoff Series Simulator"""
 
     def __init__(self, game_simulator):
         self.game_simulator = game_simulator

@@ -6,6 +6,7 @@ class GameSimulator:
     OT_TIE_THRESH = 3.85
     REG_TIE_THRESH = 0.5
     HOME_ICE_AD = 0.040
+    LAMBDA_GOAL_K= 1.25 #tweakable
 
     def simulate_game(self, home_gf_neut, home_ga_neut, away_gf_neut, away_ga_neut, home_b2b, away_b2b, is_playoffs):
         home_sched_boost = 0
@@ -86,7 +87,8 @@ class GameSimulator:
         else:
             home_sched_boost = 0.03
         
-        events = self.get_game_event_times(3.12)
+        lam = (home_gf_neut + home_ga_neut + away_gf_neut + away_ga_neut) / 4.0 * LAMBDA_GOAL_K
+        events = self.get_game_event_times(lam)
 
         home_goals = 0
         away_goals = 0
@@ -100,6 +102,7 @@ class GameSimulator:
             away_gf = np.random.normal(away_gf_neut, self.GOAL_SD *2.25, 1) / (1 + home_sched_boost / 2.0 + self.HOME_ICE_AD / 2.0 ) 
             away_ga = np.random.normal(away_ga_neut, self.GOAL_SD *2.25, 1) * (1 + home_sched_boost / 2.0 + self.HOME_ICE_AD / 2.0 ) 
 
+            # simulate conflicts
             if home_gf > away_gf and home_ga < away_gf:
                 home_goals = home_goals + 1
             elif home_gf < away_gf and home_ga > away_gf:

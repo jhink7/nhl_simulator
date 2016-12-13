@@ -34,7 +34,7 @@ teams = east_teams + west_teams
 playoff_sim = PlayoffSimulator();
 champs = []
 
-num_runs = 100
+num_runs = 100000
 
 for i in range(0, num_runs):
     champ = playoff_sim.sim_playoffs(east_teams, west_teams)
@@ -47,4 +47,6 @@ for team in teams:
     champ_probs.append(len([champ for champ in champs if champ.name == team.name]) / float(num_runs))
 
 results = pd.DataFrame({'team':[team.name for team in teams], 'champ_prob': champ_probs})
-print results
+#print results
+
+results.to_csv('playoffs.csv')

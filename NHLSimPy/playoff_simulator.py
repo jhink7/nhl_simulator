@@ -28,8 +28,22 @@ class PlayoffSimulator(object):
 
     def sim_playoffs(self, east_teams, west_teams):
         # simulate conferences
-        east_champ = self.sim_conference(east_teams[0], east_teams[1], east_teams[2], east_teams[3], east_teams[4], east_teams[5], east_teams[6], east_teams[7])
-        west_champ = self.sim_conference(west_teams[0], west_teams[1], west_teams[2], west_teams[3], west_teams[4], west_teams[5], west_teams[6], west_teams[7])
+        east_champ = self.sim_conference(east_teams[0], 
+                                         east_teams[1], 
+                                         east_teams[2], 
+                                         east_teams[3], 
+                                         east_teams[4], 
+                                         east_teams[5], 
+                                         east_teams[6], 
+                                         east_teams[7])
+        west_champ = self.sim_conference(west_teams[0],
+                                         west_teams[1], 
+                                         west_teams[2], 
+                                         west_teams[3], 
+                                         west_teams[4], 
+                                         west_teams[5], 
+                                         west_teams[6], 
+                                         west_teams[7])
 
         # simulate stanley cup final
 
