@@ -19,7 +19,7 @@ all_home_SOLs = []
 all_away_SOLs = []
 
 for x in range(0, 10000):
-    home_goals, away_goals, home_wins, away_wins, home_OTLs, away_OTLs, home_SOLs, away_SOLs, event_chart = game_simulator.simulate_game_poisson(3,3, 3, 3, False, False, False)
+    home_goals, away_goals, home_wins, away_wins, home_OTLs, away_OTLs, home_SOLs, away_SOLs, event_chart = game_simulator.simulate_game_poisson(3.6,3, 3.6, 3, False, False, False)
     all_home_goals.append(home_goals)
     all_away_goals.append(away_goals)
     all_home_wins.append(home_wins)
@@ -36,22 +36,25 @@ df = pd.DataFrame({'awayG': all_away_goals, 'homeG': all_home_goals,
 
 df['homeP'] = df.homeW * 2 + df.homeOTL + df.homeSOL
 df['awayP'] = df.awayW * 2 + df.awayOTL + df.awaySOL
+df['desc'] = 'EqualTalentTeams'
 
-print df['homeG'].mean()
-print df['awayG'].mean()
+df.to_csv('even_talent_plus_O.csv')
+
+#print df['homeG'].mean()
+#print df['awayG'].mean()
 
 #print df['homeP'].mean()
 #print df['awayP'].mean()
 
 # histogram of simmed goals
 
-plt.hist(df['homeG'], normed=False, color='b', label='Home Goals')
-plt.hist(df['awayG'], normed=False, color='r', alpha=0.5, label='Away Goals')
-plt.title("Goals Scored")
-plt.xlabel("Value")
-plt.ylabel("Probability")
-plt.legend()
-plt.show()
+#plt.hist(df['homeG'], normed=False, color='b', label='Home Goals')
+#plt.hist(df['awayG'], normed=False, color='r', alpha=0.5, label='Away Goals')
+#plt.title("Goals Scored")
+#plt.xlabel("Value")
+#plt.ylabel("Probability")
+#plt.legend()
+#plt.show()
 
 # histogram of simmed points
 #plt.clf()

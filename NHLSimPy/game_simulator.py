@@ -87,7 +87,7 @@ class GameSimulator:
         else:
             home_sched_boost = 0.03
         
-        lam = (home_gf_neut + home_ga_neut + away_gf_neut + away_ga_neut) / 4.0 * LAMBDA_GOAL_K
+        lam = (home_gf_neut + home_ga_neut + away_gf_neut + away_ga_neut) / 4.0 * self.LAMBDA_GOAL_K
         events = self.get_game_event_times(lam)
 
         home_goals = 0
